@@ -1,271 +1,237 @@
 <template>
-  <div class="header-container">
-    <header class="site-header">
-      <div class="header-content">
-        <!-- Logo Section -->
-        <div class="logo-section">
-          <router-link to="/" class="logo-link">
-            <h1 class="logo">
-              <span class="gradient-text-primary">Online</span>
-              <span class="gradient-text-secondary">Education</span>
-            </h1>
+  <div class="side-nav-container" :class="{ 'hide-nav': hideSidebar }">
+    <div class="glow-effect"></div>
+    <nav class="side-nav">
+      <ul class="nav-list">
+        <li v-for="item in menuItems" 
+            :key="item.path" 
+            class="nav-item"
+            @click="activeItem = item.path">
+          <router-link 
+            :to="item.path" 
+            class="nav-link"
+            :class="{ 'active': activeItem === item.path }">
+            <span class="icon-wrapper">
+              <component :is="item.icon" 
+                        class="icon"
+                        :class="{ 'icon-active': activeItem === item.path }" />
+            </span>
+            <span class="tooltip">{{ item.name }}</span>
           </router-link>
-        </div>
-
-        <!-- Mobile Menu Button -->
-        <button 
-          class="mobile-menu-btn"
-          @click="toggleMobileMenu"
-          :aria-expanded="isMobileMenuOpen"
-          aria-label="Toggle menu"
-        >
-          <span class="sr-only">Menu</span>
-          <svg 
-            v-if="!isMobileMenuOpen" 
-            class="menu-icon" 
-            xmlns="http://www.w3.org/2000/svg" 
-            fill="none" 
-            viewBox="0 0 24 24" 
-            stroke="currentColor"
-          >
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-          </svg>
-          <svg 
-            v-else 
-            class="menu-icon" 
-            xmlns="http://www.w3.org/2000/svg" 
-            fill="none" 
-            viewBox="0 0 24 24" 
-            stroke="currentColor"
-          >
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
-
-        <!-- Navigation and CTA -->
-        <div 
-          class="nav-cta-wrapper"
-          :class="{ 'nav-open': isMobileMenuOpen }"
-        >
-          <nav class="navigation">
-            <ul class="nav-list">
-              <li v-for="item in menuItems" :key="item.path" class="nav-item">
-                <router-link 
-                  :to="item.path" 
-                  class="nav-link"
-                  @click="isMobileMenuOpen = false"
-                >
-                  {{ item.name }}
-                </router-link>
-              </li>
-            </ul>
-          </nav>
-          <div class="cta-section">
-            <router-link to="/Login" class="cta-button">
-              Login
-            </router-link>
-          </div>
-        </div>
-      </div>
-    </header>
+        </li>
+      </ul>
+    </nav>
   </div>
 </template>
 
 <script>
+// Script remains the same as your original code
 export default {
-  name: 'AppHeader',
+  name: "SideNav",
+  // components: {
+  //   HomeIcon,
+  //   GraduationCapIcon,
+  //   BookOpenIcon,
+  //   MessageCircleIcon,
+  //   LogInIcon
+  // },
   data() {
     return {
-      isMobileMenuOpen: false,
+      activeItem: '/',
       menuItems: [
-        { name: 'About us', path: '/about' },
-        { name: 'Reviews', path: '/reviews' },
-        { name: 'Contact us', path: '/contact' }
-      ]
-    }
+        { name: "Home", path: "/" },
+        { name: "Courses", path: "/about" },
+        { name: "Resources", path: "/reviews"},
+        { name: "Community", path: "/contact"},
+        { name: "Login", path: "/login" },
+      ],
+      hideSidebar: false,
+      lastScrollY: 0,
+    };
+  },
+  mounted() {
+    window.addEventListener("scroll", this.handleScroll);
+  },
+  beforeUnmount() {
+    window.removeEventListener("scroll", this.handleScroll);
   },
   methods: {
-    toggleMobileMenu() {
-      this.isMobileMenuOpen = !this.isMobileMenuOpen;
-    }
+    handleScroll() {
+      const currentScrollY = window.scrollY;
+      if (currentScrollY > this.lastScrollY) {
+        this.hideSidebar = true;
+      } else {
+        this.hideSidebar = false;
+      }
+      this.lastScrollY = currentScrollY;
+    },
   },
-  watch: {
-    '$route'() {
-      this.isMobileMenuOpen = false;
-    }
-  }
-}
+};
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap');
-
-.header-container {
-  background: linear-gradient(to right, #0f172a, #1e293b);
-  border-bottom: 1px solid rgba(251, 191, 36, 0.2);
-  position: sticky;
-  top: 0;
+.side-nav-container {
+  position: fixed;
+  left: 40px;
+  top: 50%;
+  transform: translateY(-50%);
   z-index: 50;
-  backdrop-filter: blur(8px);
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.site-header {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 1rem;
+.glow-effect {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
+  filter: blur(30px);
+  opacity: 0.15;
+  border-radius: 40px;
+  z-index: -1;
 }
 
-.header-content {
+.hide-nav {
+  transform: translateY(-50%) translateX(-100px);
+  opacity: 0;
+}
+
+.side-nav {
+  width: 80px;
+  height: 420px;
+  background: linear-gradient(145deg, 
+    rgba(29, 38, 113, 0.95),
+    rgba(19, 15, 64, 0.98));
+  backdrop-filter: blur(10px);
+  border-radius: 40px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: center;
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.2),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.1),
+    inset 0 0 30px rgba(255, 255, 255, 0.03);
   position: relative;
-}
-
-.logo-section {
-  flex-shrink: 0;
-}
-
-.logo-link {
-  text-decoration: none;
-}
-
-.logo {
-  font-family: 'Inter', sans-serif;
-  font-size: 2.5rem;
-  font-weight: 900;
-  margin: 0;
-  display: flex;
-  gap: 0.5rem;
-  align-items: center;
-}
-
-.gradient-text-primary {
-  background: linear-gradient(135deg, #fbbf24, #f59e0b);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-.gradient-text-secondary {
-  background: linear-gradient(135deg, #f59e0b, #fbbf24);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-.mobile-menu-btn {
-  display: none;
-  padding: 0.5rem;
-  color: #fbbf24;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-}
-
-.menu-icon {
-  width: 1.75rem;
-  height: 1.75rem;
-}
-
-.nav-cta-wrapper {
-  display: flex;
-  align-items: center;
-  gap: 2rem;
+  overflow: hidden;
 }
 
 .nav-list {
-  display: flex;
   list-style: none;
-  gap: 2rem;
+  padding: 1.5rem 0;
   margin: 0;
-  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+.nav-item {
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 .nav-link {
-  color: rgba(251, 191, 36, 0.9);
-  text-decoration: none;
-  font-family: 'Inter', sans-serif;
-  font-size: 1.2rem;
-  font-weight: 600;
-  transition: all 0.3s ease;
-  padding: 0.5rem 0;
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-.nav-link:after {
-  content: '';
-  position: absolute;
-  width: 0;
-  height: 2px;
-  bottom: 0;
-  left: 0;
-  background-color: #fbbf24;
-  transition: width 0.3s ease;
+.nav-link:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateX(4px) scale(1.05);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    0 4px 12px rgba(0, 0, 0, 0.1),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.1);
 }
 
-.nav-link:hover:after {
-  width: 100%;
+.nav-link.active {
+  background: linear-gradient(135deg, #FF6B6B, #4ECDC4);
+  border-color: transparent;
+  box-shadow: 
+    0 4px 15px rgba(78, 205, 196, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.1) inset;
 }
 
-.cta-button {
-  background: linear-gradient(135deg, #fbbf24, #f59e0b);
-  color: #000000;
-  padding: 0.85rem 1.8rem;
-  border-radius: 10px;
-  font-family: 'Inter', sans-serif;
-  font-weight: 700;
-  text-decoration: none;
+.icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+}
+
+.icon {
+  color: rgba(255, 255, 255, 0.8);
   transition: all 0.3s ease;
-  display: inline-block;
-  border: 2px solid transparent;
 }
 
-.cta-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(251, 191, 36, 0.2);
-  border-color: rgba(251, 191, 36, 0.5);
+.icon-active {
+  color: #ffffff;
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.3));
+}
+
+.tooltip {
+  position: absolute;
+  left: calc(100% + 16px);
+  background: linear-gradient(135deg, #FF6B6B, #4ECDC4);
+  color: white;
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 0.7rem 1.2rem;
+  border-radius: 12px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(-8px);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  white-space: nowrap;
+  box-shadow: 
+    0 4px 15px rgba(0, 0, 0, 0.1),
+    0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+}
+
+.nav-link:hover .tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(0);
 }
 
 @media (max-width: 768px) {
-  .mobile-menu-btn {
-    display: block;
+  .side-nav-container {
+    left: 20px;
   }
 
-  .nav-cta-wrapper {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    background: linear-gradient(to right, #0f172a, #1e293b);
-    padding: 1rem;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 1rem;
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-1rem);
-    transition: all 0.3s ease;
-  }
-
-  .nav-cta-wrapper.nav-open {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-  }
-
-  .nav-list {
-    flex-direction: column;
-    gap: 1rem;
+  .side-nav {
+    width: 64px;
+    height: 360px;
+    border-radius: 32px;
   }
 
   .nav-link {
-    display: block;
-    padding: 0.5rem;
+    width: 48px;
+    height: 48px;
   }
 
-  .cta-button {
-    text-align: center;
+  .icon-wrapper {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .side-nav-container,
+  .nav-link,
+  .tooltip {
+    transition: none;
   }
 }
 </style>
