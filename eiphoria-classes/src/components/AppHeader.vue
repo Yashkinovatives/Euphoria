@@ -2,49 +2,91 @@
   <div class="side-nav-container" :class="{ 'hide-nav': hideSidebar }">
     <div class="glow-effect"></div>
     <nav class="side-nav">
+      <div class="logo-container">
+        <router-link to="/">
+          <div class="logo">
+            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none">
+              <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+              <path d="M2 17l10 5 10-5"></path>
+              <path d="M2 12l10 5 10-5"></path>
+            </svg>
+          </div>
+        </router-link>
+
+      </div>
+      
       <ul class="nav-list">
-        <li v-for="item in menuItems" 
-            :key="item.path" 
-            class="nav-item"
-            @click="activeItem = item.path">
-          <router-link 
-            :to="item.path" 
-            class="nav-link"
-            :class="{ 'active': activeItem === item.path }">
+        <li class="nav-item" @click="activeItem = '/'">
+          <router-link to="/" class="nav-link" :class="{ 'active': activeItem === '/' }">
             <span class="icon-wrapper">
-              <component :is="item.icon" 
-                        class="icon"
-                        :class="{ 'icon-active': activeItem === item.path }" />
+              <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" class="icon" :class="{ 'icon-active': activeItem === '/' }">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+              </svg>
             </span>
-            <span class="tooltip">{{ item.name }}</span>
+            <span class="tooltip">Home</span>
+          </router-link>
+        </li>
+        
+        <li class="nav-item" @click="activeItem = '/wallet'">
+          <router-link to="/about" class="nav-link" :class="{ 'active': activeItem === '/wallet' }">
+            <span class="icon-wrapper">
+              <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" class="icon" :class="{ 'icon-active': activeItem === '/wallet' }">
+                <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                <path d="M16 10h4"></path>
+                <path d="M16 14h4"></path>
+                <path d="M6 10h2"></path>
+                <path d="M6 14h4"></path>
+              </svg>
+            </span>
+            <span class="tooltip">Wallet</span>
+          </router-link>
+        </li>
+        
+        <li class="nav-item" @click="activeItem = '/courses'">
+          <router-link to="/contact" class="nav-link" :class="{ 'active': activeItem === '/courses' }">
+            <span class="icon-wrapper">
+              <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" class="icon" :class="{ 'icon-active': activeItem === '/courses' }">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+              </svg>
+            </span>
+            <span class="tooltip">Courses</span>
+          </router-link>
+        </li>
+        
+        <li class="nav-item" @click="activeItem = '/categories'">
+          <router-link to="/reviews" class="nav-link" :class="{ 'active': activeItem === '/categories' }">
+            <span class="icon-wrapper">
+              <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" class="icon" :class="{ 'icon-active': activeItem === '/categories' }">
+                <rect x="3" y="3" width="7" height="7"></rect>
+                <rect x="14" y="3" width="7" height="7"></rect>
+                <rect x="14" y="14" width="7" height="7"></rect>
+                <rect x="3" y="14" width="7" height="7"></rect>
+              </svg>
+            </span>
+            <span class="tooltip">Categories</span>
           </router-link>
         </li>
       </ul>
+      
+      <div class="profile-container">
+        <router-link to="/login" class="profile-link" :class="{ 'active': activeItem === '/profile' }" @click="activeItem = '/profile'">
+          <div class="profile-photo">
+            <img src="https://i.pravatar.cc/100" alt="Profile photo" />
+          </div>
+        </router-link>
+      </div>
     </nav>
   </div>
 </template>
 
 <script>
-// Script remains the same as your original code
 export default {
   name: "SideNav",
-  // components: {
-  //   HomeIcon,
-  //   GraduationCapIcon,
-  //   BookOpenIcon,
-  //   MessageCircleIcon,
-  //   LogInIcon
-  // },
   data() {
     return {
       activeItem: '/',
-      menuItems: [
-        { name: "Home", path: "/" },
-        { name: "Courses", path: "/about" },
-        { name: "Resources", path: "/reviews"},
-        { name: "Community", path: "/contact"},
-        { name: "Login", path: "/login" },
-      ],
       hideSidebar: false,
       lastScrollY: 0,
     };
@@ -72,7 +114,7 @@ export default {
 <style scoped>
 .side-nav-container {
   position: fixed;
-  left: 40px;
+  left: 20px;
   top: 50%;
   transform: translateY(-50%);
   z-index: 50;
@@ -86,7 +128,7 @@ export default {
   background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
   filter: blur(30px);
   opacity: 0.15;
-  border-radius: 40px;
+  border-radius: 30px;
   z-index: -1;
 }
 
@@ -96,34 +138,71 @@ export default {
 }
 
 .side-nav {
-  width: 80px;
-  height: 420px;
-  background: linear-gradient(145deg, 
-    rgba(29, 38, 113, 0.95),
-    rgba(19, 15, 64, 0.98));
-  backdrop-filter: blur(10px);
-  border-radius: 40px;
+  width: 70px;
+  height: 500px;
+  background: #f9f4f0;
+  border-radius: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 25px 0;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+.logo-container {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.logo {
+  width: 40px;
+  height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 
-    0 20px 40px rgba(0, 0, 0, 0.2),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.1),
-    inset 0 0 30px rgba(255, 255, 255, 0.03);
-  position: relative;
-  overflow: hidden;
+  border-radius: 12px;
+  background-color: #111;
+  color: white;
+}
+
+.notification-dot {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background-color: #ff6b6b;
+  border-radius: 50%;
+  top: 5px;
+  right: 16px;
+}
+
+.cart-badge {
+  position: absolute;
+  bottom: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 36px;
+  height: 36px;
+  background-color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  color: #333;
 }
 
 .nav-list {
   list-style: none;
-  padding: 1.5rem 0;
+  padding: 0;
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1.8rem;
   width: 100%;
-  position: relative;
-  z-index: 1;
 }
 
 .nav-item {
@@ -137,66 +216,50 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  color: #888;
 }
 
 .nav-link:hover {
-  background: rgba(255, 255, 255, 0.1);
-  transform: translateX(4px) scale(1.05);
-  border-color: rgba(255, 255, 255, 0.1);
-  box-shadow: 
-    0 4px 12px rgba(0, 0, 0, 0.1),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+  background-color: rgba(0, 0, 0, 0.05);
+  color: #333;
 }
 
 .nav-link.active {
-  background: linear-gradient(135deg, #FF6B6B, #4ECDC4);
-  border-color: transparent;
-  box-shadow: 
-    0 4px 15px rgba(78, 205, 196, 0.3),
-    0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+  background-color: #111;
+  color: white;
 }
 
 .icon-wrapper {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 28px;
-  height: 28px;
 }
 
 .icon {
-  color: rgba(255, 255, 255, 0.8);
   transition: all 0.3s ease;
 }
 
 .icon-active {
-  color: #ffffff;
-  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.3));
+  color: white;
 }
 
 .tooltip {
   position: absolute;
-  left: calc(100% + 16px);
-  background: linear-gradient(135deg, #FF6B6B, #4ECDC4);
+  left: calc(100% + 12px);
+  background-color: #333;
   color: white;
-  font-size: 0.9rem;
-  font-weight: 500;
-  padding: 0.7rem 1.2rem;
-  border-radius: 12px;
+  font-size: 0.8rem;
+  padding: 0.5rem 0.8rem;
+  border-radius: 6px;
   opacity: 0;
   visibility: hidden;
   transform: translateX(-8px);
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.3s ease;
   white-space: nowrap;
-  box-shadow: 
-    0 4px 15px rgba(0, 0, 0, 0.1),
-    0 0 0 1px rgba(255, 255, 255, 0.1) inset;
 }
 
 .nav-link:hover .tooltip {
@@ -205,32 +268,58 @@ export default {
   transform: translateX(0);
 }
 
+.profile-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.profile-link {
+  display: block;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.profile-link:hover, 
+.profile-link.active {
+  border-color: #ff6b6b;
+  transform: scale(1.05);
+}
+
+.profile-photo {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.profile-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 @media (max-width: 768px) {
   .side-nav-container {
-    left: 20px;
+    left: 10px;
   }
 
   .side-nav {
-    width: 64px;
-    height: 360px;
-    border-radius: 32px;
-  }
-
-  .nav-link {
-    width: 48px;
-    height: 48px;
-  }
-
-  .icon-wrapper {
-    width: 24px;
-    height: 24px;
+    width: 60px;
+    height: 400px;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .side-nav-container,
   .nav-link,
-  .tooltip {
+  .tooltip,
+  .profile-link {
     transition: none;
   }
 }

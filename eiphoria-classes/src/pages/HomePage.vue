@@ -1,605 +1,231 @@
 <template>
-  <div class="page-container">
-    <!-- Hero Section -->
-    <section class="hero">
-      <div class="hero-content" v-motion-slide-left>
-        <h1 class="hero-title">
-          <span class="gradient-text">Online</span> Education
+  <section class="hero">
+    <!-- Animated Background -->
+    <div class="animated-bg">
+      <div v-for="n in 5" :key="n" class="floating-circle"></div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content-wrapper">
+      <div class="hero-content" v-motion :initial="{ opacity: 0, y: 100 }" :enter="{ opacity: 1, y: 0 }">
+        <div class="badge" v-motion :initial="{ scale: 0 }" :enter="{ scale: 1 }">
+          <span>🚀 Elevate Your Learning</span>
+        </div>
+
+        <h1 class="title">
+          Step into the Future with  
+          <span class="gradient-text">Limitless Possibilities</span>
         </h1>
-        <p class="hero-description">
-          Unlock your potential with personalized online learning. Join thousands of students worldwide achieving their dreams.
+
+        <p class="description">
+          Unlock the full potential of your skills with interactive courses, AI-driven insights, and personalized guidance.
         </p>
-        <button class="cta-button primary-button" @click="$router.push('/Login')"
-                v-motion-pop>
-          Get Started Now
-        </button>
-      </div>
-      <div class="hero-image" v-motion-slide-right>
-        <img src="@/assets/images/img.jpg" alt="Online Education Illustration" />
-      </div>
-    </section>
 
-    <!-- Popular Courses Section -->
-    <section class="popular-courses" v-motion-fade>
-      <h2 class="section-title">Popular Courses</h2>
-      <div class="courses-grid">
-        <div v-for="course in courses" 
-             :key="course.id" 
-             class="course-card"
-             v-motion-slide-up
-             :custom-delay="course.id * 100">
-          <div class="course-icon">{{ course.icon }}</div>
-          <h3 class="course-title">{{ course.title }}</h3>
-          <p class="course-description">{{ course.description }}</p>
-          <button class="course-button">Learn More</button>
+        <div class="cta-group">
+          <button class="primary-btn" @click="$router.push('/Login')">
+            <span class="btn-icon">✨</span>
+            Get Started
+          </button>
         </div>
       </div>
-    </section>
 
-    <!-- Steps to Career Section -->
-    <section class="steps-to-career" v-motion-fade>
-      <h2 class="section-title">Three Steps to Your Career</h2>
-      <div class="steps-list">
-        <div class="step" 
-             v-for="(step, index) in steps" 
-             :key="index"
-             v-motion-slide-visible
-             :custom-delay="index * 200">
-          <div class="step-content">
-            <h3 class="step-number">0{{ index + 1 }}</h3>
-            <p class="step-description">{{ step }}</p>
+      <!-- Feature Cards -->
+      <div class="features-grid">
+        <div v-for="(feature, index) in features" 
+             :key="feature.title"
+             class="feature-card"
+             v-motion
+             :initial="{ opacity: 0, x: 100 }"
+             :enter="{ opacity: 1, x: 0 }"
+             :delay="index * 200">
+          <div class="feature-icon" :style="{ background: feature.bgColor }">
+            {{ feature.icon }}
           </div>
-          <div class="step-line" v-if="index < steps.length - 1"></div>
+          <h3>{{ feature.title }}</h3>
+          <p>{{ feature.description }}</p>
         </div>
       </div>
-    </section>
-
-    <!-- Testimonials Section -->
-    <section class="testimonials" v-motion-fade>
-      <h2 class="section-title">What People Think About Our Educational Platform</h2>
-      <div class="testimonials-grid">
-        <div v-for="testimonial in testimonials" 
-             :key="testimonial.id" 
-             class="testimonial-card"
-             v-motion-pop
-             :custom-delay="testimonial.id * 200">
-          <div class="testimonial-content">
-            <div class="quote-icon">❝</div>
-            <p class="testimonial-text">{{ testimonial.text }}</p>
-            <div class="testimonial-author">
-              <div class="author-avatar"></div>
-              <div class="author-info">
-                <h3 class="author-name">{{ testimonial.author }}</h3>
-                <p class="author-role">{{ testimonial.role }}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  </div>
+    </div>
+  </section>
 </template>
 
-<script>
-import { ref} from 'vue';
-
-// Custom directive for scroll animations
-const createScrollAnimation = (el, binding) => {
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          setTimeout(() => {
-            el.classList.add('animate');
-          }, binding.value?.delay || 0);
-          observer.unobserve(el);
-        }
-      });
-    },
-    {
-      threshold: 0.1
-    }
-  );
-  observer.observe(el);
-};
-
-export default {
-  name: "LandingPage",
-  setup() {
-    const courses = ref([
-      { 
-        id: 1, 
-        icon: "📐", 
-        title: "Mathematics",
-        description: "Master mathematical concepts from basic to advanced levels."
-      },
-      { 
-        id: 2, 
-        icon: "📘", 
-        title: "English",
-        description: "Improve your language skills with native speakers."
-      },
-      { 
-        id: 3, 
-        icon: "🌐", 
-        title: "Web Development",
-        description: "Build modern websites and web applications."
-      },
-      { 
-        id: 4, 
-        icon: "⚗️", 
-        title: "Chemistry",
-        description: "Explore the fascinating world of chemical sciences."
-      },
-    ]);
-
-    const steps = ref([
-      "Join our educational program and get access to premium content",
-      "Study theory and complete practical assignments with guidance from expert teachers",
-      "Get a recognized certificate and valuable knowledge for your career",
-    ]);
-
-    const testimonials = ref([
-      { 
-        id: 1, 
-        text: "The course content was comprehensive and the instructors were incredibly knowledgeable. I've learned more than I expected!", 
-        author: "Den White",
-        role: "Software Developer"
-      },
-      { 
-        id: 2, 
-        text: "This platform offers an amazing opportunity to learn new skills at your own pace. The community support is outstanding!", 
-        author: "Tom Brighton",
-        role: "Student"
-      },
-      { 
-        id: 3, 
-        text: "I've tried many online learning platforms, but this one stands out for its quality content and excellent teaching methods.", 
-        author: "Angela Light",
-        role: "Business Analyst"
-      },
-    ]);
-
-    return {
-      courses,
-      steps,
-      testimonials,
-    };
+<script setup>
+const features = [
+  {
+    icon: '🎯',
+    title: 'AI-Powered Learning',
+    description: 'Smart technology to personalize your education journey.',
+    bgColor: 'linear-gradient(135deg, #ff9a8b, #ff6a88, #ff99ac)'
   },
-  directives: {
-    'motion-slide-left': {
-      mounted(el, binding) {
-        el.classList.add('slide-left');
-        createScrollAnimation(el, binding);
-      }
-    },
-    'motion-slide-right': {
-      mounted(el, binding) {
-        el.classList.add('slide-right');
-        createScrollAnimation(el, binding);
-      }
-    },
-    'motion-slide-up': {
-      mounted(el, binding) {
-        el.classList.add('slide-up');
-        createScrollAnimation(el, binding);
-      }
-    },
-    'motion-fade': {
-      mounted(el, binding) {
-        el.classList.add('fade');
-        createScrollAnimation(el, binding);
-      }
-    },
-    'motion-pop': {
-      mounted(el, binding) {
-        el.classList.add('pop');
-        createScrollAnimation(el, binding);
-      }
-    },
-    'motion-slide-visible': {
-      mounted(el, binding) {
-        el.classList.add('slide-visible');
-        createScrollAnimation(el, binding);
-      }
-    }
+  {
+    icon: '⚡',
+    title: 'Ultra Fast Performance',
+    description: 'Seamless access to courses, tools, and insights anytime.',
+    bgColor: 'linear-gradient(135deg, #38ef7d, #11998e)'
+  },
+  {
+    icon: '🌎',
+    title: 'Global Community',
+    description: 'Connect with learners and experts around the world.',
+    bgColor: 'linear-gradient(135deg, #56ccf2, #2f80ed)'
   }
-};
+]
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
-
-.page-container {
-  font-family: 'Poppins', sans-serif;
-  background-color: #f8fafc;
+.hero {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+  position: relative;
+  overflow: hidden;
+  padding: 3rem;
+  color: #2c3e50;
 }
 
-/* Hero Section */
-.hero {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 4rem 6rem;
-  background: linear-gradient(135deg, #f8fafc, #f1f5f9);
-  min-height: 80vh;
-  gap: 4rem;
+/* Animated Background */
+.animated-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.floating-circle {
+  position: absolute;
+  background: linear-gradient(45deg, rgba(255, 87, 87, 0.1), rgba(255, 195, 113, 0.1));
+  border-radius: 50%;
+  animation: float 20s infinite linear;
+}
+
+.floating-circle:nth-child(1) { width: 250px; height: 250px; top: 10%; left: 15%; animation-delay: 0s; }
+.floating-circle:nth-child(2) { width: 180px; height: 180px; top: 60%; left: 80%; animation-delay: -4s; }
+.floating-circle:nth-child(3) { width: 320px; height: 320px; top: 40%; left: 50%; animation-delay: -8s; }
+.floating-circle:nth-child(4) { width: 120px; height: 120px; top: 80%; left: 20%; animation-delay: -12s; }
+.floating-circle:nth-child(5) { width: 220px; height: 220px; top: 25%; left: 70%; animation-delay: -16s; }
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  100% { transform: translateY(-20px); }
+}
+
+/* Main Content */
+.content-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
 }
 
 .hero-content {
-  flex: 1;
-  max-width: 600px;
-}
-
-.hero-title {
-  font-size: 4rem;
-  font-weight: 800;
-  line-height: 1.2;
-  margin-bottom: 1.5rem;
-}
-
-.hero-description {
-  font-size: 1.25rem;
-  color: #64748b;
+  max-width: 650px;
   margin-bottom: 2rem;
-  line-height: 1.6;
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+.title {
+  font-size: 3.5rem;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 1rem;
 }
 
 .gradient-text {
-  background: linear-gradient(45deg, #fbbf24, #f59e0b);
+  background: linear-gradient(45deg, #ff758c, #ff7eb3);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  background-clip: text;
 }
 
-.hero-image {
-  flex: 1;
-  max-width: 600px;
+.description {
+  font-size: 1.2rem;
+  color: #374151;
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
 }
 
-.hero-image img {
-  width: 100%;
-  height: auto;
-  border-radius: 20px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+.cta-group {
+  margin-bottom: 2rem;
 }
 
-/* Buttons */
-.cta-button {
+.primary-btn {
   padding: 1rem 2rem;
   border-radius: 9999px;
   font-weight: 600;
-  font-size: 1.1rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  border: none;
-}
-
-.primary-button {
-  background: linear-gradient(45deg, #fbbf24, #f59e0b);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: transform 0.3s ease;
+  background: linear-gradient(45deg, #ff758c, #ff7eb3);
   color: white;
-  box-shadow: 0 4px 15px rgba(251, 191, 36, 0.4);
+  box-shadow: 0 4px 15px rgba(255, 120, 180, 0.4);
 }
 
-.primary-button:hover {
+.primary-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(251, 191, 36, 0.6);
 }
 
-.secondary-button {
-  background: #475569;
-  color: white;
-  box-shadow: 0 4px 15px rgba(71, 85, 105, 0.4);
-}
-
-.secondary-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(71, 85, 105, 0.6);
-}
-
-/* Sections */
-section {
-  padding: 6rem 4rem;
-}
-
-.section-title {
-  font-size: 2.5rem;
-  font-weight: 700;
-  text-align: center;
-  margin-bottom: 3rem;
-  color: #1e293b;
-}
-
-/* Popular Courses */
-.courses-grid {
+/* Feature Cards */
+.features-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
+  gap: 1.5rem;
 }
 
-.course-card {
-  background: white;
-  padding: 2rem;
-  border-radius: 20px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-  transition: all 0.3s ease;
-  text-align: center;
+.feature-card {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 1.5rem;
+  transition: transform 0.3s ease;
 }
 
-.course-card:hover {
+.feature-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 
-.course-icon {
-  font-size: 3rem;
-  margin-bottom: 1rem;
-}
-
-.course-title {
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: #1e293b;
-  margin-bottom: 1rem;
-}
-
-.course-description {
-  color: #64748b;
-  margin-bottom: 1.5rem;
-  line-height: 1.6;
-}
-
-.course-button {
-  background: transparent;
-  color: #f59e0b;
-  border: 2px solid #f59e0b;
-  padding: 0.5rem 1.5rem;
-  border-radius: 9999px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.course-button:hover {
-  background: #f59e0b;
-  color: white;
-}
-
-/* Steps to Career */
-.steps-list {
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-.step {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  margin-bottom: 2rem;
-}
-
-.step-content {
-  background: white;
-  padding: 2rem;
-  border-radius: 20px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-  width: 100%;
-}
-
-.step-number {
-  font-size: 2.5rem;
-  font-weight: 800;
-  color: #f59e0b;
-  margin-bottom: 1rem;
-}
-
-.step-description {
-  color: #64748b;
-  line-height: 1.6;
-}
-
-.step-line {
-  height: 50px;
-  width: 2px;
-  background: #f59e0b;
-  margin: 1rem 0;
-}
-
-/* Free Trial Section */
-.free-trial {
-  background: linear-gradient(135deg, #1e293b, #0f172a);
-  color: white;
-  text-align: center;
-}
-
-.free-trial .section-title {
-  color: white;
-}
-
-.trial-description {
-  font-size: 1.25rem;
-  color: #cbd5e1;
-  margin-bottom: 2rem;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.trial-buttons {
-  display: flex;
-  gap: 1rem;
-  justify-content: center;
-}
-
-/* Testimonials */
-.testimonials-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.testimonial-card {
-  background: white;
-  border-radius: 20px;
-  padding: 2rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-  transition: all 0.3s ease;
-}
-
-.testimonial-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-}
-
-.quote-icon {
-  font-size: 3rem;
-  color: #f59e0b;
-  line-height: 1;
-  margin-bottom: 1rem;
-}
-
-.testimonial-text {
-  color: #64748b;
-  line-height: 1.6;
-  margin-bottom: 1.5rem;
-  font-style: italic;
-}
-
-.testimonial-author {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.author-avatar {
+.feature-icon {
   width: 50px;
   height: 50px;
-  border-radius: 50%;
-  background: linear-gradient(45deg, #fbbf24, #f59e0b);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  margin-bottom: 0.8rem;
 }
 
-.author-name {
-  font-weight: 600;
-  color: #1e293b;
+.feature-card h3 {
+  margin-bottom: 0.5rem;
+  font-size: 1.2rem;
 }
 
-.author-role {
-  color: #64748b;
-  font-size: 0.9rem;
-}
-/* Animation Classes */
-.slide-left {
-  opacity: 0;
-  transform: translateX(-50px);
-  transition: all 0.8s ease-out;
+.feature-card p {
+  font-size: 1rem;
+  color: #374151;
+  line-height: 1.5;
 }
 
-.slide-right {
-  opacity: 0;
-  transform: translateX(50px);
-  transition: all 0.8s ease-out;
-}
-
-.slide-up {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: all 0.6s ease-out;
-}
-
-.fade {
-  opacity: 0;
-  transition: opacity 1s ease-out;
-}
-
-.pop {
-  opacity: 0;
-  transform: scale(0.9);
-  transition: all 0.6s cubic-bezier(0.17, 0.67, 0.83, 0.67);
-}
-
-.slide-visible {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: all 0.6s ease-out;
-}
-
-/* Animation States */
-.animate {
-  opacity: 1;
-  transform: translate(0) scale(1);
-}
-
-/* Smooth Scrolling */
-html {
-  scroll-behavior: smooth;
-}
-
-/* Enhanced Hover Effects */
-.course-card {
-  transition: all 0.4s cubic-bezier(0.17, 0.67, 0.83, 0.67);
-}
-
-.course-card:hover {
-  transform: translateY(-10px) scale(1.02);
-}
-
-.testimonial-card {
-  transition: all 0.4s cubic-bezier(0.17, 0.67, 0.83, 0.67);
-}
-
-.testimonial-card:hover {
-  transform: translateY(-10px) scale(1.02);
-}
-
-/* Enhanced Gradient Effects */
-.gradient-text {
-  background: linear-gradient(45deg, #fbbf24, #f59e0b, #d97706);
-  background-size: 200% 200%;
-  animation: gradient 5s ease infinite;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-@keyframes gradient {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
 /* Responsive Design */
-@media (max-width: 1024px) {
-  .hero {
-    flex-direction: column;
-    padding: 3rem 2rem;
-    text-align: center;
-  }
-
-  .hero-title {
-    font-size: 3rem;
-  }
-
-  .trial-buttons {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  section {
-    padding: 4rem 2rem;
-  }
-}
-
 @media (max-width: 768px) {
-  .section-title {
-    font-size: 2rem;
+  .hero {
+    padding: 2rem;
   }
 
-  .courses-grid,
-  .testimonials-grid {
+  .title {
+    font-size: 2.8rem;
+  }
+
+  .features-grid {
     grid-template-columns: 1fr;
   }
 }
