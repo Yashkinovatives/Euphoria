@@ -5,21 +5,40 @@
       <div class="logo-container">
         <router-link to="/">
           <div class="logo">
-            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none">
+            <svg
+              viewBox="0 0 24 24"
+              width="24"
+              height="24"
+              stroke="currentColor"
+              stroke-width="2"
+              fill="none"
+            >
               <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
               <path d="M2 17l10 5 10-5"></path>
               <path d="M2 12l10 5 10-5"></path>
             </svg>
           </div>
         </router-link>
-
       </div>
-      
+
       <ul class="nav-list">
         <li class="nav-item" @click="activeItem = '/'">
-          <router-link to="/" class="nav-link" :class="{ 'active': activeItem === '/' }">
+          <router-link
+            to="/"
+            class="nav-link"
+            :class="{ active: activeItem === '/' }"
+          >
             <span class="icon-wrapper">
-              <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" class="icon" :class="{ 'icon-active': activeItem === '/' }">
+              <svg
+                viewBox="0 0 24 24"
+                width="24"
+                height="24"
+                stroke="currentColor"
+                stroke-width="2"
+                fill="none"
+                class="icon"
+                :class="{ 'icon-active': activeItem === '/' }"
+              >
                 <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                 <polyline points="9 22 9 12 15 12 15 22"></polyline>
               </svg>
@@ -27,38 +46,76 @@
             <span class="tooltip">Home</span>
           </router-link>
         </li>
-        
-        <li class="nav-item" @click="activeItem = '/wallet'">
-          <router-link to="/about" class="nav-link" :class="{ 'active': activeItem === '/wallet' }">
+
+        <li class="nav-item" @click="activeItem = '/about'">
+          <router-link
+            to="/about"
+            class="nav-link"
+            :class="{ active: activeItem === '/about' }"
+          >
             <span class="icon-wrapper">
-              <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" class="icon" :class="{ 'icon-active': activeItem === '/wallet' }">
-                <rect x="2" y="4" width="20" height="16" rx="2"></rect>
-                <path d="M16 10h4"></path>
-                <path d="M16 14h4"></path>
-                <path d="M6 10h2"></path>
-                <path d="M6 14h4"></path>
+              <svg
+                viewBox="0 0 24 24"
+                width="24"
+                height="24"
+                stroke="currentColor"
+                stroke-width="2"
+                fill="none"
+                class="icon"
+                :class="{ 'icon-active': activeItem === '/about' }"
+              >
+                <circle cx="12" cy="7" r="4"></circle>
+                <path d="M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"></path>
               </svg>
             </span>
-            <span class="tooltip">Wallet</span>
+            <span class="tooltip">About Us</span>
           </router-link>
         </li>
-        
+
         <li class="nav-item" @click="activeItem = '/courses'">
-          <router-link to="/contact" class="nav-link" :class="{ 'active': activeItem === '/courses' }">
+          <router-link
+            to="/contact"
+            class="nav-link"
+            :class="{ active: activeItem === '/courses' }"
+          >
             <span class="icon-wrapper">
-              <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" class="icon" :class="{ 'icon-active': activeItem === '/courses' }">
+              <svg
+                viewBox="0 0 24 24"
+                width="24"
+                height="24"
+                stroke="currentColor"
+                stroke-width="2"
+                fill="none"
+                class="icon"
+                :class="{ 'icon-active': activeItem === '/courses' }"
+              >
                 <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
-                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                <path
+                  d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"
+                ></path>
               </svg>
             </span>
             <span class="tooltip">Courses</span>
           </router-link>
         </li>
-        
+
         <li class="nav-item" @click="activeItem = '/categories'">
-          <router-link to="/reviews" class="nav-link" :class="{ 'active': activeItem === '/categories' }">
+          <router-link
+            to="/reviews"
+            class="nav-link"
+            :class="{ active: activeItem === '/categories' }"
+          >
             <span class="icon-wrapper">
-              <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" class="icon" :class="{ 'icon-active': activeItem === '/categories' }">
+              <svg
+                viewBox="0 0 24 24"
+                width="24"
+                height="24"
+                stroke="currentColor"
+                stroke-width="2"
+                fill="none"
+                class="icon"
+                :class="{ 'icon-active': activeItem === '/categories' }"
+              >
                 <rect x="3" y="3" width="7" height="7"></rect>
                 <rect x="14" y="3" width="7" height="7"></rect>
                 <rect x="14" y="14" width="7" height="7"></rect>
@@ -69,9 +126,14 @@
           </router-link>
         </li>
       </ul>
-      
+
       <div class="profile-container">
-        <router-link to="/login" class="profile-link" :class="{ 'active': activeItem === '/profile' }" @click="activeItem = '/profile'">
+        <router-link
+          to="/login"
+          class="profile-link"
+          :class="{ active: activeItem === '/profile' }"
+          @click="activeItem = '/profile'"
+        >
           <div class="profile-photo">
             <img src="https://i.pravatar.cc/100" alt="Profile photo" />
           </div>
@@ -86,7 +148,7 @@ export default {
   name: "SideNav",
   data() {
     return {
-      activeItem: '/',
+      activeItem: "/",
       hideSidebar: false,
       lastScrollY: 0,
     };
@@ -125,9 +187,9 @@ export default {
   position: absolute;
   width: 100%;
   height: 100%;
-  background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
+  background: linear-gradient(45deg, #7C3AED, #A855F7);
   filter: blur(30px);
-  opacity: 0.15;
+  opacity: 0.2;
   border-radius: 30px;
   z-index: -1;
 }
@@ -140,7 +202,7 @@ export default {
 .side-nav {
   width: 70px;
   height: 500px;
-  background: #f9f4f0;
+  background: #7C3AED, #A855F7;
   border-radius: 30px;
   display: flex;
   flex-direction: column;
@@ -285,7 +347,7 @@ export default {
   border: 2px solid transparent;
 }
 
-.profile-link:hover, 
+.profile-link:hover,
 .profile-link.active {
   border-color: #ff6b6b;
   transform: scale(1.05);

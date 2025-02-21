@@ -5,9 +5,9 @@
       <div class="contact-info">
         <div class="info-content">
           <h1 class="title">
-            Let's Start a <span class="highlight">Conversation</span>
+            Connect <span class="highlight">With Us</span>
           </h1>
-          <p class="subtitle">We'd love to hear from you! Let's create something amazing together.</p>
+          <p class="subtitle">Have a project in mind? We're excited to hear about it! Let's bring your ideas to life.</p>
 
           <div class="contact-details">
             <div
@@ -34,6 +34,7 @@
               :key="index"
               :href="social.link"
               class="social-icon"
+              :aria-label="social.label"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -50,37 +51,39 @@
       <div class="contact-form-section">
         <form @submit.prevent="submitForm" class="contact-form">
           <div class="form-group">
-            <label for="name" class="form-label">Name</label>
+            <label for="name" class="form-label">Full Name</label>
             <input
               id="name"
               type="text"
               v-model="form.name"
-              placeholder="Enter your full name"
+              placeholder="Your full name"
               required
               class="input-field"
+              autocomplete="name"
             />
           </div>
           
           <div class="form-group">
-            <label for="email" class="form-label">Email</label>
+            <label for="email" class="form-label">Email Address</label>
             <input
               id="email"
               type="email"
               v-model="form.email"
-              placeholder="Enter your email address"
+              placeholder="you@example.com"
               required
               class="input-field"
+              autocomplete="email"
             />
           </div>
 
           <div class="form-group">
-            <label for="message" class="form-label">Message</label>
+            <label for="message" class="form-label">Your Message</label>
             <textarea
               id="message"
               v-model="form.message"
-              placeholder="Write your message here..."
+              placeholder="Share your thoughts or project details..."
               required
-              rows="2"
+              rows="4"
               class="textarea-field"
             ></textarea>
           </div>
@@ -108,44 +111,53 @@ export default {
       },
       contactDetails: [
         {
-          title: 'Address',
-          description: '123 Learning Lane, Tech City',
+          title: 'Company Headquarters',
+          description: '123 Innovation Drive, Tech Hub 94123',
           icon: 'LocationIcon'
         },
         {
-          title: 'Email',
-          description: 'support@euphoriaclasses.com',
+          title: 'Customer Support',
+          description: 'support@creativesolutions.com',
           icon: 'MailIcon'
         },
         {
-          title: 'Phone',
-          description: '+1 (555) 123-4567',
+          title: 'Contact Number',
+          description: '+1 (888) creative-help',
           icon: 'PhoneIcon'
         }
       ],
       socialLinks: [
         { 
-          link: '#', 
+          link: 'https://twitter.com/creativesolutions', 
           icon: 'TwitterIcon',
-          label: 'Twitter'
+          label: 'Twitter Profile'
         },
         { 
-          link: '#', 
+          link: 'https://linkedin.com/company/creativesolutions', 
           icon: 'LinkedinIcon',
-          label: 'LinkedIn'
+          label: 'LinkedIn Page'
         },
         { 
-          link: '#', 
+          link: 'https://instagram.com/creative.solutions', 
           icon: 'InstagramIcon',
-          label: 'Instagram'
+          label: 'Instagram Account'
         }
       ]
     };
   },
   methods: {
     submitForm() {
-      alert('Message sent successfully!');
-      this.form = { name: '', email: '', message: '' };
+      // Improved form submission with basic validation
+      if (this.form.name.trim() && this.form.email.trim() && this.form.message.trim()) {
+        // Here you would typically add actual form submission logic
+        // For now, we'll use a simple alert
+        alert('Thank you for your message! We will get back to you soon.');
+        
+        // Reset form
+        this.form = { name: '', email: '', message: '' };
+      } else {
+        alert('Please fill out all fields completely.');
+      }
     }
   }
 };
@@ -164,7 +176,7 @@ export default {
 .contact-wrapper {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  max-width: 1000px;
+  max-width: 1200px;
   width: 100%;
   background: #ffffff;
   border-radius: 20px;
@@ -173,7 +185,7 @@ export default {
 }
 
 .contact-info {
-  padding: 2rem;
+  padding: 2.5rem;
   background: linear-gradient(135deg, #f59e0b, #fbbf24);
   color: white;
 }
@@ -185,9 +197,9 @@ export default {
 }
 
 .title {
-  font-size: 2.25rem;
-  font-weight: 700;
-  margin-bottom: 0.75rem;
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
   line-height: 1.2;
 }
 
@@ -197,97 +209,97 @@ export default {
 
 .subtitle {
   color: rgba(255, 255, 255, 0.9);
-  font-size: 1rem;
-  margin-bottom: 2rem;
+  font-size: 1.1rem;
+  margin-bottom: 2.5rem;
 }
 
 .contact-details {
-  margin-bottom: 2rem;
+  margin-bottom: 2.5rem;
 }
 
 .contact-item {
   display: flex;
   align-items: center;
-  gap: 1rem;
-  margin-bottom: 1.25rem;
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
 }
 
 .icon-wrapper {
   background: rgba(255, 255, 255, 0.2);
-  padding: 0.75rem;
-  border-radius: 10px;
+  padding: 1rem;
+  border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .contact-icon {
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
   color: white;
 }
 
 .detail-text h3 {
-  font-size: 0.9rem;
-  font-weight: 600;
-  margin-bottom: 0.25rem;
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 0.35rem;
 }
 
 .detail-text p {
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   color: rgba(255, 255, 255, 0.9);
 }
 
 .social-links {
   margin-top: auto;
   display: flex;
-  gap: 0.75rem;
+  gap: 1rem;
 }
 
 .social-icon {
   background: rgba(255, 255, 255, 0.2);
-  padding: 0.5rem;
-  border-radius: 8px;
+  padding: 0.75rem;
+  border-radius: 10px;
   transition: all 0.3s ease;
 }
 
 .social-icon:hover {
   background: rgba(255, 255, 255, 0.3);
-  transform: translateY(-2px);
+  transform: translateY(-3px);
 }
 
 .icon {
-  width: 18px;
-  height: 18px;
+  width: 22px;
+  height: 22px;
   color: white;
 }
 
 .contact-form-section {
-  padding: 2rem;
+  padding: 2.5rem;
   background: white;
 }
 
 .form-group {
-  margin-bottom: 1.25rem;
+  margin-bottom: 1.5rem;
 }
 
 .form-label {
   display: block;
-  font-weight: 500;
-  margin-bottom: 0.375rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
   color: #1f2937;
-  font-size: 0.9rem;
+  font-size: 1rem;
 }
 
 .input-field,
 .textarea-field {
   width: 100%;
-  padding: 0.75rem;
+  padding: 0.875rem;
   background: #f9fafb;
   border: 2px solid #e5e7eb;
-  border-radius: 10px;
+  border-radius: 12px;
   transition: all 0.3s ease;
-  font-size: 0.9rem;
+  font-size: 1rem;
 }
 
 .input-field:focus,
@@ -295,39 +307,39 @@ export default {
   border-color: #fbbf24;
   background: white;
   outline: none;
-  box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.1);
+  box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.2);
 }
 
 .textarea-field {
   resize: vertical;
-  min-height: 60px;
+  min-height: 120px;
 }
 
 .submit-btn {
   width: 100%;
-  padding: 0.75rem;
+  padding: 0.875rem;
   background: linear-gradient(135deg, #f59e0b, #fbbf24);
   border: none;
   color: white;
-  font-weight: 600;
-  border-radius: 10px;
+  font-weight: 700;
+  border-radius: 12px;
   cursor: pointer;
   transition: all 0.3s ease;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
-  font-size: 0.9rem;
+  gap: 0.75rem;
+  font-size: 1rem;
 }
 
 .submit-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(251, 191, 36, 0.3);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(251, 191, 36, 0.4);
 }
 
 .send-icon {
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
 }
 
 @media (max-width: 768px) {
@@ -336,16 +348,20 @@ export default {
   }
 
   .contact-container {
-    padding: 0.75rem;
+    padding: 0.5rem;
   }
 
   .contact-info,
   .contact-form-section {
-    padding: 1.5rem;
+    padding: 2rem;
   }
 
   .title {
-    font-size: 1.75rem;
+    font-size: 2rem;
+  }
+
+  .subtitle {
+    font-size: 1rem;
   }
 }
 </style>
